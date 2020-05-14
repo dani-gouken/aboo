@@ -5,3 +5,25 @@ html body .page-header{
 .page-header .filter::after{
 	background-color: rgba(0,0,0,0.7);
 }
+
+.sidebar-section{
+	margin-top: 6rem;
+}
+
+
+@media (max-width: 576px) {
+
+}
+
+@media (max-width: 768px) {
+	.sidebar-section{
+		margin-top: 0rem;
+	}
+}
+
+@media (max-width: 992px) {
+}
+
+@media (max-width: 1200px) {
+
+}
