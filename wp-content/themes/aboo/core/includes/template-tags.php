@@ -157,3 +157,22 @@ if (!function_exists('aboo_post_thumbnail')) :
         endif; // End is_singular().
     }
 endif;
+
+if (!function_exists("aboo_get_post_type_color")) {
+    function aboo_get_post_type_color(string $postype)
+    {
+        switch ($postype) {
+            case 'document':
+                return "text-info";
+                break;
+
+            case 'service':
+                return "text-warning";
+                break;
+
+            default:
+                return 'text-dark';
+                break;
+        }
+    }
+}

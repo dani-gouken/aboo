@@ -86,17 +86,21 @@
                     <?php $post_type = get_post_type($recent["ID"]) ?>
                     <div class="card card-plain card-blog">
                         <div class="card-body">
-                            <h6 class="card-category text-dark"><a href="<?= get_post_type_archive_link($post_type) ?>"><?= $post_type ?></a></h6>
+                            <h6 class="card-category">
+                                <a class="<?= aboo_get_post_type_color($post_type) ?>" href=" <?= get_post_type_archive_link($post_type) ?>"><?= $post_type ?></a>
+                            </h6>
                             <h3 class="card-title">
                                 <a href="<?php echo get_permalink($recent['ID']) ?>"><?= $recent["post_title"] ?></a>
                             </h3>
                             <p class="card-description">
                                 <?= get_the_excerpt($recent["ID"]) ?>
                                 <br><a href="<?php echo get_permalink($recent['ID']) ?>"> Read More </a>
-                                <a href="#pablo" class="ml-2 btn btn-small btn-dark btn-link">Download</a>
+                                <?php if ($post_type == "document" && ($file = get_field("file", $recent["ID"]))) : ?>
+                                    <a download="" href="<?= $file ?>" class="ml-2 btn btn-small btn-dark btn-link">Download</a>
+                                <?php endif ?>
                             </p>
                             <p class="author">
-                                <?= get_the_date("",false, $recent["ID"]) ?>
+                                <?= get_the_date("", false, $recent["ID"]) ?>
                             </p>
                         </div>
                     </div>
