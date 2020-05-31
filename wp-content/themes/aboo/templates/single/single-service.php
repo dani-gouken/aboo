@@ -4,50 +4,61 @@
     <ul>
         <?php foreach ($deliveredBy as $institution_array) : ?>
             <?php $institution = end($institution_array); ?>
-            <li><a href="<?= get_permalink($institution->post_title) ?>" class="text-info"><?= $institution->post_title ?></a></li>
+            <li><a href="<?= get_permalink($institution->ID) ?>" class="text-info"><?= $institution->post_title ?></a></li>
         <?php endforeach ?>
     </ul>
 <?php endif ?>
 <p class="mb-2">
-    <span class="font-weight-bold">Cost</span>:
+    <span class="font-weight-bold"><?= _e("Cost") ?></span>:
+    <?php $cost = get_field("cost") ?>
     <?= $cost == null || $cost == 0 ? "Free" : "$cost XAF" ?>
 </p>
-<p class="font-weight-bold">Document required</p>
-<p class="mb-2">
-    <?php var_dump(get_field("document_required")) ?>
-    <ul>
-        <li><a href="#" class="text-info">Photocopy of the Natinal Card (50 XAF)</a></li>
-        <li><a href="#" class="text-info">Photocopy of the Natinal Card (20 000 XAF)</a></li>
-        <li><a href="#" class="text-info">Photocopy of the Natinal Card (Free)</a></li>
-    </ul>
-</p>
-<p class="font-weight-bold">Other requirement</p>
-<p class="mb-2">
-    <ul>
-        <li>02 4x4 Photo</li>
-    </ul>
-</p>
+<?php $documents_required = get_field("document_required") ?>
+<?php if (!empty($documents_required)) : ?>
+    <p class="font-weight-bold"><?= _e("Document required") ?></p>
+    <p class="mb-2">
+        <ul>
+            <?php foreach ($documents_required as $document_required) : ?>
+                <?php $document_required = end($document_required); ?>
+                <li>
+                    <a href="<?= get_permalink($document_required->ID) ?>" class="text-info">
+                        <?= $document_required->post_title ?>
+                    </a>
+                </li>
+            <?php endforeach ?>
+        </ul>
+    </p>
+<?php endif ?>
+<?php $other_requirements = get_field("other_requirement") ?>
+<?php if (!empty($other_requirements)) : ?>
+    <p class="font-weight-bold"><?= _e("Other requirement") ?></p>
+    <p class="mb-2">
+        <ul>
+            <?php foreach ($other_requirements as $other_requirement) : ?>
+                <?php $other_requirement = end($other_requirement); ?>
+                <li><?= $other_requirement ?></li>
+            <?php endforeach ?>
+        </ul>
+    </p>
+<?php endif ?>
 <p class="mb-4">
     <?= the_content() ?>
 </p>
-<p class="mb-2">
-    <span class="font-weight-bold"><u>Frequently asked question</u></span>
-    <ul>
-        <li>
-            <p class="font-weight-bold">
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Labore voluptatum odit magni fugit, placeat quam est ?
-            </p>
-            <p>
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit. In veritatis, consectetur accusamus quam repellendus, tempore provident at culpa ducimus, cumque error aut porro? Hic, harum dolorum nesciunt autem, enim unde!
-            </p>
-        </li>
-        <li>
-            <p class="font-weight-bold">
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Labore voluptatum odit magni fugit, placeat quam est ?
-            </p>
-            <p>
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit. In veritatis, consectetur accusamus quam repellendus, tempore provident at culpa ducimus, cumque error aut porro? Hic, harum dolorum nesciunt autem, enim unde!
-            </p>
-        </li>
-    </ul>
-</p>
+<?php $frequently_asked_questions = get_field("frequently_asked_questions") ?>
+<?php if (!empty($frequently_asked_questions)) : ?>
+    <p class="mb-2">
+        <span class="font-weight-bold"><u><?= _e("Frequently asked question") ?></u></span>
+        <ul>
+            <?php foreach ($frequently_asked_questions as $frequently_asked_question) : ?>
+                <li>
+                    <p class="font-weight-bold">
+                        <?= $frequently_asked_question["question"] ?>
+                    </p>
+                    <p>
+                        <?= $frequently_asked_question["answer"] ?>
+                    </p>
+                </li>
+            <?php endforeach ?>
+        </ul>
+    </p>
+<?php endif ?>

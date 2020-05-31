@@ -27,3 +27,12 @@ html body .page-header{
 @media (max-width: 1200px) {
 
 }
+
+.screen-reader-text{
+	display: none;
+}
+.custom-logo {
+    width: 7rem;
+    height: 4rem;
+    object-fit: scale-down;
+}

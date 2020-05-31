@@ -48,3 +48,63 @@ if (!function_exists('aboo_setup')) :
     }
 endif;
 add_action('after_setup_theme', 'aboo_setup');
+
+// filter
+function my_posts_where($where)
+{
+
+    $where = str_replace("meta_key = 'delivered_by_$", "meta_key LIKE 'delivered_by_%", $where);
+    $where = str_replace("meta_key = 'document_required_$", "meta_key LIKE 'document_required_%", $where);
+    return $where;
+}
+
+add_filter('posts_where', 'my_posts_where');
+add_filter('pre_get_posts', 'my_get_posts');
+
+function my_get_posts($query)
+{
+
+    if (is_home() && $query->is_main_query() || (is_date() && is_archive()))
+        $query->set('post_type', array('post', 'service', 'institution', 'document'));
+
+    return $query;
+}
+
+function aboo_pagination_links()
+{
+    global $wp_query;
+
+    if (
+        $wp_query->max_num_pages <= 1
+    ) return;
+
+    $big = 999999999; // need an unlikely integer
+    $pages = paginate_links(array(
+        'base' => str_replace($big, '%#%', esc_url(get_pagenum_link($big))),
+        'format' => '?paged=%#%',
+        'current' => max(1, get_query_var('paged')),
+        'total' => $wp_query->max_num_pages,
+        'type'  => 'array',
+    ));
+    if (is_array($pages)) {
+        $current_page = get_query_var('paged');
+        $paged = ($current_page == 0) ? 1 : $current_page;
+        echo '<div class="text-center mx-auto pagination-area"><ul class="pagination pagination-success justify-content-center">';
+        foreach ($pages as $page) {
+            $active = strpos($page, "page-numbers current") > 0;
+            if (!$active) {
+                echo "<li class='page-item'>$page</li>";
+            } else {
+                echo "<li class='active page-item'>$page</li>";
+            }
+        }
+        echo '</ul></div>';
+    }
+}
+function prefix_modify_nav_menu_args($args)
+{
+    return array_merge($args, array(
+        'walker' => new WP_Bootstrap_Navwalker(),
+    ));
+}
+add_filter('wp_nav_menu_args', 'prefix_modify_nav_menu_args');

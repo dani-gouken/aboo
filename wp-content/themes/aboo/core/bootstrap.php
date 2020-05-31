@@ -31,6 +31,16 @@ if (!function_exists("aboo_uri")) {
         return get_template_directory_uri() . "/" . $path;
     }
 }
+if (!function_exists("aboo_get_taxonomy_by_post_type")) {
+    function aboo_get_taxonomy_by_post_type(string $post_type)
+    {
+        if ($post_type == "post") {
+            return "category";
+        }
+        return $post_type . "_category";
+    }
+}
 
 // setup the theme
+aboo_include("/includes/class-wp-bootstrap-navwalker.php");
 aboo_include("setup.php");

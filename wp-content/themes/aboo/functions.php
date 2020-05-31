@@ -6,5 +6,6 @@ function main(){
     aboo_include("/includes/template-functions.php");
     aboo_include("/includes/customizer.php");
     aboo_include("/includes/post-types.php");
+    aboo_include("/includes/taxonomies.php");
 }
 main();

@@ -10,5 +10,5 @@
 <body class="<?php body_class(); ?>">
     <?php wp_body_open(); ?>
     <?php get_template_part("templates/navigation") ?>
-    <div class="main mt-4">
+    <div class="main mt-4" style="min-height:88.5vh">
     

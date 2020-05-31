@@ -2,11 +2,11 @@
   <nav class="navbar navbar-expand-lg fixed-top nav-down bg-success">
       <div class="container">
           <div class="navbar-translate">
-              <a class="navbar-brand" href="index.html" rel="tooltip" data-placement="bottom">
+              <a class="navbar-brand" href="<?= home_url() ?>" rel="tooltip" data-placement="bottom">
                   <?php if (has_custom_logo()) : ?>
                       <?= the_custom_logo() ?>
                   <?php else : ?>
-                    <?= bloginfo("name") ?>
+                      <?= bloginfo("name") ?>
                   <?php endif ?>
 
               </a>
@@ -17,47 +17,20 @@
               </button>
           </div>
           <div class="collapse navbar-collapse">
-              <ul class="navbar-nav ml-auto">
-                  <li class="dropdown nav-item">
-                      <a href="#" class="dropdown-toggle nav-link" id="navbarDropdownMenuLink1" data-toggle="dropdown">
-                          Aboo for Cameroonians
-                      </a>
-                      <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink1">
-                          <a class="dropdown-item" href="service-listing.html">
-                              Services
-                          </a>
-                          <a class="dropdown-item" href="Institution-listing.html">
-                              Institutions
-                          </a>
-                          <a class="dropdown-item" href="document-listing.html">
-                              Documents
-                          </a>
-                      </div>
-                  </li>
-                  <li class="dropdown nav-item">
-                      <a href="#" class="dropdown-toggle nav-link" id="navbarDropdownMenuLink1" data-toggle="dropdown">
-                          Aboo for diaspora
-                      </a>
-                      <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink1">
-                          <a class="dropdown-item" href="#">
-                              How to invest in cameroon
-                          </a>
-                          <a class="dropdown-item" href="#">
-                              Take care of your familly
-                          </a>
-                      </div>
-                  </li>
-                  <li class="nav-item">
-                      <a href="#" class="nav-link">
-                          About
-                      </a>
-                  </li>
-                  <li class="nav-item">
-                      <a href="#" class="nav-link">
-                          Contact us
-                      </a>
-                  </li>
-              </ul>
+              <?= wp_nav_menu(array(
+                    'theme_location'  => 'menu-header',
+                    'depth'           => 2, // 1 = no dropdowns, 2 = with dropdowns.
+                    'container'       => 'div',
+                    'container_class' => 'collapse navbar-collapse',
+                    'container_id'    => 'bs-example-navbar-collapse-1',
+                    'menu_class'      => 'navbar-nav mr-auto',
+                    'fallback_cb'       => 'WP_Bootstrap_Navwalker::fallback',
+                    'walker'          => new WP_Bootstrap_Navwalker(),
+                )); ?>
+              <form action="<?= home_url() ?>" method="get" class="form-inline ml-auto">
+                  <input placeholder="<?= _e('search') ?>" name="s" type="text" class="form-control mr-sm-2 no-border">
+                  <button type="submit" class="btn btn-primary btn-just-icon btn-round"><i class="nc-icon nc-zoom-split" aria-hidden="true"></i></button>
+              </form>
           </div>
       </div>
   </nav>

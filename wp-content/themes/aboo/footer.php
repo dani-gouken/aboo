@@ -17,7 +17,7 @@
                     ©
                     <script>
                         document.write(new Date().getFullYear())
-                    </script>, made with <i class="fa fa-heart heart"></i> Aboo
+                    </script>, made by <i class="fa fa-heart heart"></i> Aboo
                 </span>
             </div>
         </div>

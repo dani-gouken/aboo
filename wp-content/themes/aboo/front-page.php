@@ -1,5 +1,5 @@
 <?= get_header() ?>
-<div class="section">
+<div class="section section-gray">
     <div class="container">
         <div class="row">
             <div class="col-md-6">
@@ -15,8 +15,7 @@
                         </p>
                         <div class="my-4"></div>
                         <p>
-                            <a href="cameroonians-index.html" class="btn btn-round btn-success mb-2">I'm a cameroonian</a>
-                            <a href="#" class="btn btn-round btn-warning">I'm a foreigner</a>
+                            <a href="<?= get_permalink(get_option('page_for_posts')) ?>" class="btn btn-round btn-warning mb-2">Get started</a>
                         </p>
                     </div>
                 </div>
@@ -27,86 +26,34 @@
         </div>
     </div>
 </div>
-<div class="section section-gray">
-    <div class="container">
-        <div class="row">
-            <div class="col-md-5">
-                <img src="<?= the_field('block_2_image') ?>" class="img-fluid" />
-            </div>
-            <div class="col-md-6  ml-auto">
-                <div class="row">
-                    <div class="container">
-                        <h2 class="title"><?= the_field("block_2_titre_1") ?></h2>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-12">
-                        <p>
-                            <?= the_field("block_2_text_1") ?>
-                        </p>
-                        <p class="mt-4">
-                            <a href="" class="btn btn-round btn-success">Get started</a>
-                        </p>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="container">
-                        <h2 class="title"><?= the_field("block_2_titre_2") ?></h2>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-12">
-                        <p>
-                            <?= the_field("block_2_text_2") ?>
-                        </p>
-                        <p class="mt-4">
-                            <a href="cameroonians-index.html" class="btn btn-round btn-warning">Get started</a>
-                        </p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
 <div class="section">
     <div class="container">
         <div class="row">
-            <div class="col-md-10 ml-auto mr-auto">
+            <div class="col-md-12 ml-auto mr-auto">
                 <h2 class="title">Latest Uploads</h2>
                 <ul>
                     <?php
                     $args = array(
                         'numberposts' => '10',
-                        'post_type'        => ['institution', 'document', 'service'],
+                        'post_type'        => ['post', 'institution', 'document', 'service'],
                     );
                     $recent_posts = wp_get_recent_posts($args);
                     ?>
                 </ul>
                 <?php foreach ($recent_posts as $recent) : ?>
-                    <?php $post_type = get_post_type($recent["ID"]) ?>
-                    <div class="card card-plain card-blog">
-                        <div class="card-body">
-                            <h6 class="card-category">
-                                <a class="<?= aboo_get_post_type_color($post_type) ?>" href=" <?= get_post_type_archive_link($post_type) ?>"><?= $post_type ?></a>
-                            </h6>
-                            <h3 class="card-title">
-                                <a href="<?php echo get_permalink($recent['ID']) ?>"><?= $recent["post_title"] ?></a>
-                            </h3>
-                            <p class="card-description">
-                                <?= get_the_excerpt($recent["ID"]) ?>
-                                <br><a href="<?php echo get_permalink($recent['ID']) ?>"> Read More </a>
-                                <?php if ($post_type == "document" && ($file = get_field("file", $recent["ID"]))) : ?>
-                                    <a download="" href="<?= $file ?>" class="ml-2 btn btn-small btn-dark btn-link">Download</a>
-                                <?php endif ?>
-                            </p>
-                            <p class="author">
-                                <?= get_the_date("", false, $recent["ID"]) ?>
-                            </p>
-                        </div>
-                    </div>
+                    <?php
+                    set_query_var('content', $recent);
+                    get_template_part('templates/teaser/teaser');
+                    ?>
                 <?php endforeach ?>
+                <div class="text-center">
+                    <a href="<?= get_permalink(get_option('page_for_posts')) ?>" class="btn btn-success btn-round  btn-lg">
+                        <?= _e("Show more") ?>
+                    </a>
+                </div>
             </div>
         </div>
     </div>
 </div>
+
 <?= get_footer() ?>
